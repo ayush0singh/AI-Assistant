@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="page-shell">
+        <section class="workspace" aria-labelledby="project-title">
+            <div class="intro-panel">
+                <p class="eyebrow">Prompt Engineering Internship Assignment</p>
+                <h1 id="project-title">Gemini AI Assistant</h1>
+                <p class="subtitle">Select a task, choose a prompt style, and generate a polished response.</p>
+                <div class="mode-list" aria-label="Assistant functions">
+                    <span>Question Answering</span>
+                    <span>Text Summarization</span>
+                    <span>Creative Writing</span>
+                </div>
+            </div>
+
+            <div class="app-card">
+                <form id="assistant-form" class="assistant-form">
+                    <div class="control-grid">
+                        <label class="field">
+                            <span>Function</span>
+                            <select id="function-select" name="function" required>
+                                <option value="question_answering">Question Answering</option>
+                                <option value="summarization">Text Summarization</option>
+                                <option value="creative_writing">Creative Content Generation</option>
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span>Prompt Style</span>
+                            <select id="style-select" name="prompt_style" required></select>
+                        </label>
+                    </div>
+
+                    <label class="field">
+                        <span>Your Input</span>
+                        <textarea
+                            id="user-input"
+                            name="user_input"
+                            rows="9"
+                            placeholder="Ask a question, paste text to summarize, or describe a creative request..."
+                            required
+                        ></textarea>
+                    </label>
+
+                    <div class="action-row">
+                        <button id="generate-btn" type="submit">
+                            <span class="button-text">Generate Response</span>
+                        </button>
+                        <div id="loading" class="loading hidden" role="status" aria-live="polite">
+                            <span class="spinner"></span>
+                            Generating...
+                        </div>
+                    </div>
+                </form>
+
+                <section id="response-card" class="response-card hidden" aria-live="polite">
+                    <div class="response-header">
+                        <h2>AI Response</h2>
+                        <button id="copy-btn" type="button" title="Copy response">Copy</button>
+                    </div>
+                    <div id="response-output" class="response-output"></div>
+
+                    <div id="feedback-section" class="feedback-section hidden">
+                        <p>Was this response helpful?</p>
+                        <div class="feedback-actions">
+                            <button class="feedback-btn" type="button" data-feedback="yes">Yes</button>
+                            <button class="feedback-btn secondary" type="button" data-feedback="no">No</button>
+                        </div>
+                        <p id="feedback-message" class="feedback-message" aria-live="polite"></p>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.PROMPT_STYLES = {{ prompt_styles | tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
